@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Keep the interactive mission workspace on the home route and isolate illustrative ephemeris calculations in a UI-independent utility so validated data sources can replace them cleanly.
