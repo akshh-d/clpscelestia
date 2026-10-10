@@ -1,9 +1,9 @@
-import { useMemo, useState, type ReactNode } from "react";
+import { useId, useMemo, useState, type ReactNode } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import {
   Activity, Antenna, ArrowDownRight, ArrowRight, ArrowUpRight, CalendarDays,
   Check, ChevronDown, CircleDot, Crosshair, Earth, Expand, Focus, Globe2,
-  Layers2, LocateFixed, Menu, Moon, Orbit, PanelLeftClose, Radio, Satellite,
+  Layers2, LocateFixed, Menu, Moon, Orbit, Radio, Satellite,
   SlidersHorizontal, Sun, Target, X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -37,6 +37,12 @@ const navItems: { label: View; icon: typeof Orbit; eyebrow?: string }[] = [
   { label: "Communication windows", icon: Antenna },
   { label: "Mission comparison", icon: Layers2 },
 ];
+
+const telemetryToneClass = {
+  blue: "text-lunar-blue",
+  amber: "text-solar-amber",
+  violet: "text-lunar-violet",
+} as const;
 
 function MissionControl() {
   const [view, setView] = useState<View>("Overview");
@@ -122,12 +128,12 @@ function MissionControl() {
           <EstimateNote />
 
           <div id="primary-instruments" className="scroll-mt-20">
-            {view === "Overview" && <OverviewInstruments site={activeSite} eph={eph} time={minuteOfDay} setTime={setMinuteOfDay} onOpen={show} tracking={tracking} setTracking={setTracking} />}
-            {view === "Horizon simulator" && <HorizonView site={activeSite} eph={eph} time={minuteOfDay} setTime={setMinuteOfDay} />}
+            {view === "Overview" && <OverviewInstruments site={activeSite} eph={eph} time={minuteOfDay} missionDate={missionDate} setTime={setMinuteOfDay} onOpen={show} tracking={tracking} setTracking={setTracking} />}
+            {view === "Horizon simulator" && <HorizonView site={activeSite} eph={eph} time={minuteOfDay} missionDate={missionDate} setTime={setMinuteOfDay} />}
             {view === "Landing sites" && <LandingSitesView active={activeSite} onSelect={setActiveSiteId} eph={eph} />}
-            {view === "Solar analysis" && <SolarView site={activeSite} eph={eph} time={minuteOfDay} setTime={setMinuteOfDay} />}
+            {view === "Solar analysis" && <SolarView site={activeSite} eph={eph} time={minuteOfDay} missionDate={missionDate} setTime={setMinuteOfDay} />}
             {view === "Communication windows" && <CommunicationView site={activeSite} eph={eph} time={minuteOfDay} setTime={setMinuteOfDay} />}
-            {view === "Mission comparison" && <CompareView primary={activeSite} secondary={compareSite} secondaryId={compareSiteId} onSecondary={setCompareSiteId} primaryEph={eph} secondaryEph={compareEph} time={minuteOfDay} setTime={setMinuteOfDay} />}
+            {view === "Mission comparison" && <CompareView primary={activeSite} secondary={compareSite} secondaryId={compareSiteId} onSecondary={setCompareSiteId} primaryEph={eph} secondaryEph={compareEph} time={minuteOfDay} missionDate={missionDate} setTime={setMinuteOfDay} />}
           </div>
 
           <footer className="mt-10 flex flex-wrap items-center justify-between gap-2 border-t border-border/70 pt-4 font-mono text-[9px] text-muted-foreground"><span>LUNAR HORIZON · SOUTH POLAR MISSION INTELLIGENCE</span><span>ILLUSTRATIVE SIMULATION · NOT FLIGHT NAVIGATION DATA</span></footer>

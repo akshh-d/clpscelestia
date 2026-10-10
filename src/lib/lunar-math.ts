@@ -10,7 +10,7 @@ export type LandingSite = {
   sunlightOffset: number;
 };
 
-export const landingSites: LandingSite[] = [
+export const landingSites = [
   {
     id: "nobile-rim",
     name: "Nobile Rim 01",
@@ -44,7 +44,7 @@ export const landingSites: LandingSite[] = [
     earthBase: 13.2,
     sunlightOffset: -2.1,
   },
-];
+] as const satisfies readonly LandingSite[];
 
 export type Ephemeris = {
   solarElevation: number;
